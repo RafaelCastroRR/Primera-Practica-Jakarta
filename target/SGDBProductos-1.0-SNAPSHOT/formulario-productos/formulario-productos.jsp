@@ -4,6 +4,7 @@
     Author     : Usuario
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,9 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     </head>
     <body style="padding-top: 70px;">
+
         <nav class="navbar bg-body-tertiary fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="..//index.jsp">Gestor de Productos</a>
@@ -42,10 +43,19 @@
             </div>
         </nav>
 
+        <div class="container text-center">
+            <% ArrayList<String> datosProducto = (ArrayList) request.getAttribute("datosProducto"); %>
+            <% if (datosProducto != null) { %>
+            <% for (String producto : datosProducto) {%>
+            <ul>
+                <li class="list-unstyled"><%=producto%></li>
+            </ul>
+            <%}%>
+            <%}%>
+        </div>
+
         <div class="container w-100">
-
-
-            <form class=" mt-3">
+            <form class=" mt-3" method="post" action="AgregarProductoServlet" onsubmit="return validarFormulario();">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="nombreproducto" name="nombreProducto" placeholder="">
                     <label for="nombreproducto">Nombre Del Producto</label>
@@ -63,12 +73,32 @@
                     <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                 </div>
                 <div>
-                    <input type ="submit"class ="btn btn-outline-success" value ="agregar">
+                    <input type="submit" class="btn btn-outline-success" value="agregar">
                 </div>
             </form>
-
         </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <script>
+
+                function validarFormulario() {
+                    var nombreProducto = document.getElementById('nombreproducto').value.trim();
+                    var marcaProducto = document.getElementById('marcaproducto').value.trim();
+                    var descripcionProducto = document.getElementById('descripcionproducto').value.trim();
+
+
+                    if (nombreProducto === '' || marcaProducto === '' || descripcionProducto === '') {
+                        alert('Por favor completa todos los campos');
+                        return false;
+                    }
+
+
+               
+                    return true; // Permite el envío del formulario
+                }
+        </script>
+
 
     </body>
 </html>
