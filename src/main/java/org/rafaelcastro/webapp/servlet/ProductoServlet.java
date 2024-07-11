@@ -38,7 +38,7 @@ public class ProductoServlet extends HttpServlet {
 
         req.setAttribute("datosProducto", datosProducto);
 
-        getServletContext().getRequestDispatcher("/formulario-productos/formulario-productos.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("./formulario-productos/formulario-productos.jsp").forward(req, resp);
     }
 
 }
